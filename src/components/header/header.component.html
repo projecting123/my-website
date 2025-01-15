@@ -1,0 +1,29 @@
+<div class="__left_nav__">
+  <div>
+    <button crLink aria-label="Toggle Sidebar" (click)="toggleSidebar()"><ng-icon size="22" name="matMenuOutline"></ng-icon></button>
+  </div>
+  <div class="__logo__container__">
+    <a [routerLink]="auth.isAuthorizedSubject.value ? '/dashboard' : '/'" aria-label="Website Logo"><img
+        src="/favicon.ico" alt="Website Logo" class="__logo__" /></a>
+  </div>
+  <div><a routerLink="/about" routerLinkActive="active_link" [routerLinkActiveOptions]="{ exact: true }"
+      crLink>About</a></div>
+</div>
+
+<div class="__right_nav__">
+  @if (!isAuthorized()) {
+  <div>
+    <a aria-label="Signup page" routerLink="/signup" routerLinkActive="active_link"
+      [routerLinkActiveOptions]="{ exact: true }" crLink>Signup</a>
+  </div>
+
+  <div>
+    <a aria-label="Login page" routerLink="/login" routerLinkActive="active_link"
+      [routerLinkActiveOptions]="{ exact: true }" crLink>
+      Login
+    </a>
+  </div>
+  } @if (isAuthorized()) {
+  <div><a (click)="logout()" crLink>Logout</a></div>
+  }
+</div>

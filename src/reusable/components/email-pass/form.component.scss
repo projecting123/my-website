@@ -1,0 +1,9 @@
+@use '../../scss/form.component' as formStyle;
+
+:host{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: formStyle.$form_input_gap;
+    align-items: center;
+}

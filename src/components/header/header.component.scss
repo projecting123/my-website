@@ -1,0 +1,54 @@
+@use "../../reusable/scss/layout";
+
+:host{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(45 127 199);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: layout.$header_height;
+    position: relative;
+    z-index: 1000;
+    padding: 0 2rem;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.__left_nav__{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.__right_nav__{
+    display: flex;
+}
+
+a[crLink]{
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+}
+
+.active_link{
+    color: #091c6e;
+    background-color: rgba(0, 92, 187, 0.2);
+}
+
+.__logo__container__ a img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+button{
+    background-color: transparent;
+}
+
+button[crLink]{
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}

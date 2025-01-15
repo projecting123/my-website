@@ -1,0 +1,66 @@
+@use "../../../reusable/scss/layout";
+
+$sidebar_color: rgb(79 113 214 / 64%);
+
+%common_style_1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+:host {
+    @extend %common_style_1;
+    background-color: $sidebar_color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: layout.$sidebar_height;
+    padding: 0 0.6rem;
+    overflow: hidden;
+    width: 2.5rem;
+
+    &.expanded {
+        width: 9rem;
+    }
+}
+
+.sidebar {
+    display: flex;
+    position: relative;
+    flex: 1;
+
+    a {
+        border-radius: 50px;
+        padding: 0.5rem;
+        flex: 1;
+    }
+
+    &_links_container {
+        @extend %common_style_1;
+        flex: 1;
+        gap: 0.5rem;
+        margin: 0.2rem 0;
+    }
+}
+
+
+.links_on_expanded {
+    display: flex;
+    gap: 0.5rem
+}
+
+.top_items {
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        flex: 1;
+    }
+}
+
+.bottom_items div {
+    display: flex;
+}
+
+.active_link {
+    background-color: rgba(0, 92, 187, 0.2);
+}

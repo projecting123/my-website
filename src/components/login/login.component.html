@@ -1,0 +1,11 @@
+<div class="__form_container__">
+    <form action="" [formGroup]="fs.currentFormFields()">
+        <div id="__form_text__">
+            <h2>Login</h2>
+        </div>
+        @defer (hydrate on hover) {
+            <ep-form [form]="fs.currentFormFields()"></ep-form>
+        }
+        <button type="button" formButton>Login</button>
+    </form>
+</div>

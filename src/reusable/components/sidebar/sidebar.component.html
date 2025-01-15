@@ -1,0 +1,20 @@
+<div class="sidebar">
+  <div class="sidebar_links_container">
+    <div class="top_items">
+      @for (item of topLevelLinks; track $index) {
+      <div><a [routerLink]="item.link" routerLinkActive="active_link" [routerLinkActiveOptions]="{ exact: true }" crLink
+          [ngClass]="isExpanded() ? 'links_on_expanded' : ''" crTooltip [tooltipText]="item.name"><ng-icon size="22"
+            [name]="item.icon"></ng-icon><span *ngIf="isExpanded()">{{item.name}}</span></a>
+      </div>
+      }
+    </div>
+    <div class="bottom_items">
+      @for (item of bottomLevelLinks; track $index) {
+      <div><a [routerLink]="item.link" routerLinkActive="active_link" [routerLinkActiveOptions]="{ exact: true }" crLink
+          [ngClass]="isExpanded() ? 'links_on_expanded' : ''" crTooltip [tooltipText]="item.name"><ng-icon size="22"
+            [name]="item.icon"></ng-icon><span *ngIf="isExpanded()">{{item.name}}</span></a>
+      </div>
+      }
+    </div>
+  </div>
+</div>

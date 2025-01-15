@@ -1,0 +1,46 @@
+<div class="__form_container__">
+  <form action="" [formGroup]="fs.currentFormFields()">
+    <div id="__form_text__">
+      <h2>Signup</h2>
+    </div>
+
+    <!-- Name Field -->
+    <div class="__form_control_container__">
+      <div class="__input_and_label_container__">
+        <input
+          cr_input
+          autocomplete="off"
+          type="text"
+          formControlName="name"
+          id="name"
+          aria-label="Name Input Field"
+        />
+        <label for="name">Name</label>
+      </div>
+      <div class="__formcontrol_status__">ok</div>
+    </div>
+
+    @defer (hydrate on hover) {
+      <ep-form [form]="fs.currentFormFields()"></ep-form>
+    }
+
+    <!-- Confirm Password Field -->
+    <div class="__form_control_container__">
+      <div class="__input_and_label_container__">
+        <input
+          cr_input
+          autocomplete="off"
+          type="password"
+          formControlName="confirmPassword"
+          id="confirmPassword"
+          aria-label="Confirm Password Input Field"
+        />
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+      <div class="__formcontrol_status__">ok</div>
+    </div>
+    <button type="button" formButton>
+      Signup
+    </button>
+  </form>
+</div>
