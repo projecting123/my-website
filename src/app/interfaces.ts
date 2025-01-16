@@ -2,10 +2,10 @@
  * Interface for the user's information
  */
 export interface AuthUserInfo {
-  id: string;
+  userId: string;
   name: string;
   email: string;
-  iat: number;
+  loggedinAt: string;
 }
 
 /**

@@ -12,6 +12,7 @@ import { CRLinkDirective } from '../../directives/crlink.directive';
 import { SettingsService } from '../../services/settings.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMenuOutline } from '@ng-icons/material-icons/outline';
+import { TransferStateService } from '../../services/transferstate.service';
 
 @Component({
   selector: 'cr-header',
@@ -23,6 +24,7 @@ import { matMenuOutline } from '@ng-icons/material-icons/outline';
 export class HeaderComponent implements OnInit, OnDestroy {
   private readonly subscription: Subscription = new Subscription();
   readonly auth = inject(AuthService);
+  private readonly ts = inject(TransferStateService);
   private readonly router = inject(Router);
   readonly isAuthorized = signal<boolean>(false);
   private readonly settings = inject(SettingsService);
@@ -35,10 +37,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    const response = this.auth.logout();
-    const logoutSubscription = response.subscribe({
+    const logoutSubscription = this.auth.logout().subscribe({
       next: () => {
-        localStorage.removeItem('user');
+        this.ts.remove(this.ts.AUTH_USER_KEY);
         this.router.navigate(['/login']);
       },
     });

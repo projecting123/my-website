@@ -5,6 +5,7 @@ import { BehaviorSubject, Observer, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SettingsService } from './settings.service';
 import { Router } from '@angular/router';
+import { TransferStateService } from './transferstate.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class FormService {
   public readonly formSubmitted = new Subject();
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly ts = inject(TransferStateService);
   public readonly currentFormFields = computed<FormGroup<any>>(() => {
     if (this.formType() == 'signup') return this.signupFormFields;
     if (this.formType() == 'login') return this.loginFormFields;
@@ -68,6 +70,7 @@ export class FormService {
 
   readonly signupObserver: Partial<Observer<Object>> = {
     next: (res: any) => {
+      this.ts.set(this.ts.AUTH_USER_KEY, res);
       this.modifyFormAfterSubmission();
       this.settings.openSnackbar('Account created successfully!', {
         bgColor: 'SUCCESS',
@@ -84,6 +87,7 @@ export class FormService {
 
   readonly loginObserver: Partial<Observer<Object>> = {
     next: (res: any) => {
+      this.ts.set(this.ts.AUTH_USER_KEY, res);
       this.modifyFormAfterSubmission();
       this.router.navigate(['/dashboard']);
     },

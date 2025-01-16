@@ -39,7 +39,7 @@ export const routes: Routes = [
         (m) => m.DashboardComponent
       ),
     canActivate: [routeGuard],
-    resolve: { auth: authResolver },
+    resolve: { user: authResolver },
     children: [
       {
         path: '',

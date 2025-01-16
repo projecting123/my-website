@@ -24,7 +24,5 @@ export class LoginComponent {
     this.subscription.add(pathSubscription);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  ngOnDestroy() {this.subscription.unsubscribe()}
 }
