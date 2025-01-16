@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
-import { SnackbarOptions } from '../interfaces/settings';
 import { BehaviorSubject } from 'rxjs';
+import { SnackbarOptions } from '../app/interfaces';
 
 @Injectable({
     providedIn: 'root'

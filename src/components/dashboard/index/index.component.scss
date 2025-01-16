@@ -1,24 +1,47 @@
+@use 'sass:color';
 $bg_and_shadow_color: rgba(0, 92, 187, 0.3);
+$primary_color: rgb(0, 80, 150);
+
+@function getTransition($for){
+    @if($for == 'btn'){
+        @return all 0.1s ease-in-out;
+    }
+    @if($for == 'card'){
+        @return all 0.25s ease-in-out;
+    }
+}
+
+%each_card_common_style {
+    display: flex;
+    padding: 1rem;
+    border-radius: 12px;
+    color: $primary_color;
+    background-color: color.adjust($bg_and_shadow_color, $lightness: -15%);
+    box-shadow: 4px 1px 4px $bg_and_shadow_color;
+}
+
+%profile_left_or_right_style {
+    display: flex;
+    flex-direction: column;
+}
+
+%each_card_hover_style{
+    box-shadow:0 0 10px $primary_color;   
+}
 
 :host {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 0.4rem;
+    padding: 1rem;
     position: relative;
     z-index: 0;
 }
 
-.__user_name_email__ {
-    background-color: $bg_and_shadow_color;
-    box-shadow: 4px 1px 4px $bg_and_shadow_color;
-    display: flex;
+.welcome_message {
+    @extend %each_card_common_style;
     align-items: center;
     flex-direction: column;
-    flex: 1;
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    color: rgb(0, 80, 150);
     text-align: center;
 
     small {
@@ -29,13 +52,42 @@ $bg_and_shadow_color: rgba(0, 92, 187, 0.3);
     }
 }
 
+.profile_card {
+    @extend %each_card_common_style;
+    transition: getTransition('card');
+    justify-content: space-between;
 
-cr-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border-radius: 4px;
-    padding: 0.6rem;
-    box-shadow: 0 0 10px 2px var(--form_button_color);
+    .left {
+        @extend %profile_left_or_right_style;
+        gap: 0.5rem;
+
+        &info {
+            @extend %profile_left_or_right_style;
+            gap: 0.1rem;
+        }
+    }
+
+    .right {
+
+        &info {
+            @extend %profile_left_or_right_style;
+            gap: 0.2rem;
+            align-items: center;
+        }
+    }
+
+    &:hover{
+        @extend %each_card_hover_style;
+    }
+}
+
+button {
+    padding: 0.4rem 0.8rem;
     border-radius: 12px;
+    box-shadow: 0 0 4px $primary_color;
+    transition: getTransition('btn');
+
+    &:hover {
+        box-shadow: 0 0px 6px 0.5px $primary_color;
+    }
 }

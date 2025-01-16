@@ -22,9 +22,7 @@ export class DashboardComponent implements OnInit{
         localStorage.setItem('user', JSON.stringify(res['auth']));
         this.userService.set(res['auth']);
       }
-      else{
-        this.userService.set(JSON.parse(isExistUser));
-      }
+      else this.userService.set(JSON.parse(isExistUser));
     }
   }
 }

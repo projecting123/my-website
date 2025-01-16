@@ -28,11 +28,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private readonly settings = inject(SettingsService);
   private readonly isSidebarExpanded = signal<boolean>(false);
   ngOnInit(): void {
-    const authSubscription = this.auth.isAuthorizedSubject.subscribe(
-      (value: any) => this.isAuthorized.set(value)
+    const authSubscription = this.auth.isAuthorized.subscribe((value: any) =>
+      this.isAuthorized.set(value)
     );
     this.subscription.add(authSubscription);
   }
+
   logout() {
     const response = this.auth.logout();
     const logoutSubscription = response.subscribe({

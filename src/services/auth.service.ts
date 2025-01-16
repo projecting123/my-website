@@ -9,7 +9,7 @@ import { CR_APP_CONFIG } from '../tokens/app.token';
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly app = inject(CR_APP_CONFIG);
-  public readonly isAuthorizedSubject = new BehaviorSubject<boolean | null>(null);
+  public readonly isAuthorized = new BehaviorSubject<boolean | null>(null);
   constructor() {}
 
   /**
@@ -35,24 +35,26 @@ export class AuthService {
   }
 
   /**
-   * Determines if the user is authorized based on the environment (server or client).
-   * On the server, it checks for the presence of the `CR_ID` cookie in the request headers
-   * and sends a request to verify the authentication status. On the client, it checks for the
-   * presence of the `CR_ID` cookie in the document cookies.
+   * Returns an observable that emits the user's authorization status.
+   * If the user is not authorized, the observable emits false otherwise true.
+   * The observable also updates the value of the `isAuthorized` subject accordingly.
+   *
+   * You, shouldn't call this method unless you've to check for fresh authorization status, 
+   * because it involves network request. Instead, you can use the `isAuthorized` subject.
+   *
    */
-
-  isUserAuthorized(): Observable<any> {
+  getUserAuthStatus(): Observable<any> {
     if (!this.app.isServer) {
       if (this.app.findCookieFromBrowser('CR_ID') === undefined) {
-        this.isAuthorizedSubject.next(false);
+        this.isAuthorized.next(false);
         return of(false);
       }
-      this.isAuthorizedSubject.next(true);
+      this.isAuthorized.next(true);
       return of(true);
     }
 
     if (!this.getAuthToken_SSR()) {
-      this.isAuthorizedSubject.next(false);
+      this.isAuthorized.next(false);
       return of(false);
     }
 
@@ -63,7 +65,7 @@ export class AuthService {
       )
       .pipe(
         map((response: any) => response.isAuthorized),
-        tap((isAuthorized) => this.isAuthorizedSubject.next(isAuthorized))
+        tap((isAuthorized) => this.isAuthorized.next(isAuthorized))
       );
   }
 
@@ -73,15 +75,16 @@ export class AuthService {
    * On the server, the request is sent with the `authCookie` header set to the value of the `CR_ID` cookie.
    */
   getAuthUserInfo(): Observable<any> {
-    if(this.app.isServer){
+    if(!this.isAuthorized) return of(null);
+    if (this.app.isServer) {
       return this.http.get('http://localhost:4500/api/get_user_info', {
-        headers: { authCookie: this.getAuthToken_SSR()! }
+        headers: { authCookie: this.getAuthToken_SSR()! },
       });
     }
     const user = localStorage.getItem('user');
-    if(user) return of(JSON.parse(user));
+    if (user) return of(JSON.parse(user));
     return this.http.get('http://localhost:4500/api/get_user_info', {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 }

@@ -7,32 +7,23 @@ export const routeGuard: CanActivateFn = async (route: ActivatedRouteSnapshot, s
   const auth = inject(AuthService);
   const router = inject(Router)
   const path = route.url[0]?.path;
+  const isAuthorized = await firstValueFrom(auth.getUserAuthStatus());
   
-  // home route
-  if(path == undefined){
-    const isAuthorized = await firstValueFrom(auth.isUserAuthorized());
-    if(isAuthorized){
+  if (path == undefined || path == 'signup' || path == 'login') {
+    if (isAuthorized) {
       router.navigate(['/dashboard']);
       return false;
     }
-    return true;
-  }
-
-  if(path == 'signup' || path == 'login'){
-    const isAuthorized = await firstValueFrom(auth.isUserAuthorized());
-    if(isAuthorized){
-      router.navigate(['/dashboard']);
-      return false;
-    }
+    auth.isAuthorized.next(false);
     return true;
   }
 
   else if(path == 'dashboard'){
-    const isAuthorized = await firstValueFrom(auth.isUserAuthorized());
     if(!isAuthorized){
       router.navigate(['/login']);
       return false;
     };
+    auth.isAuthorized.next(true);
     return true;
   }
   return true;

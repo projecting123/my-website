@@ -11,7 +11,7 @@ import { CR_CSS_CONFIG } from '../tokens/customcss.token';
 import { CR_APP_CONFIG } from '../tokens/app.token';
 
 /**
- * This directive creates ripple effect on click of a link.
+ * This directive creates ripple effect on link or button upon click.
  */
 @Directive({
   selector: '[crLink]',

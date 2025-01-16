@@ -1,7 +1,31 @@
-<div class="__user_name_email__">
+<div class="welcome_message" role="region" aria-label="Welcome Message">
     <div>
         <h1>Welcome to Concept Research</h1>
         <small>keep learning, keep practising</small>
     </div>
 </div>
-<cr-card></cr-card>
+
+<div class="profile_card" role="region" aria-labelledby="profile-heading">
+    <div class="left">
+        <div id="profile-heading" class="heading" role="heading" aria-level="2">
+            <h2>Profile Info</h2>
+        </div>
+        <div class="status" aria-live="polite">
+            <p>75% Profile complete</p>
+        </div>
+        <div class="leftinfo" role="contentinfo">
+            <small aria-label="Brain Points">My score: 5k</small>
+            <small aria-label="Level">Level: 1</small>
+            <small aria-label="Today's Total Answered Questions">Answered Questions: 10</small>
+            <small aria-label="Today's Left Questions">Left Questions: 0</small>
+        </div>
+        <div class="btn"><button crLink role="button" tabindex="0" aria-label="Edit Profile">Edit</button></div>
+    </div>
+    <div class="right">
+        <div><img src="" alt="Profile Image"></div>
+        <div class="rightinfo">
+            <small aria-label="User name">{{user()?.name}}</small>
+            <small aria-label="User email">{{user()?.email}}</small>
+        </div>
+    </div>
+</div>
